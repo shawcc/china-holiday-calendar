@@ -1,0 +1,66 @@
+name: Check official holiday release
+
+on:
+  schedule:
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for a new official notice
+        id: check
+        run: |
+          set +e
+          python3 scripts/check_release.py | tee check-output.txt
+          status=${PIPESTATUS[0]}
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Open a verification issue
+        if: steps.check.outputs.status == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = require("fs").readFileSync("check-output.txt", "utf8");
+            const lines = output.split("\n").filter(line => /^\d{4}\|/.test(line));
+            for (const line of lines) {
+              const [year, title, url] = line.split("|");
+              const issueTitle = `[待核验] ${year} 年节假日通知`;
+              const existing = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open",
+                labels: "release-check",
+                per_page: 100
+              });
+              if (existing.data.some(issue => issue.title === issueTitle)) continue;
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                labels: ["release-check"],
+                body: [
+                  "监测到可能的新年度国务院办公厅通知，请人工核对原文后再发布下载文件。",
+                  "",
+                  `- 标题：${title}`,
+                  `- 候选来源：${url}`,
+                  "",
+                  "核验清单：",
+                  "- [ ] 来源域名及正文为中国政府网",
+                  "- [ ] 发布机关、文号、发布日期完整",
+                  "- [ ] 每个放假日期与补班日期逐项复核",
+                  "- [ ] 运行生成脚本并检查 XLSX 行数、格式与 SHA-256",
+                  "- [ ] 更新网站状态后关闭本 issue"
+                ].join("\n")
+              });
+            }

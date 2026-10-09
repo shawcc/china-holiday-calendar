@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="中国法定节假日工作日历，依据国务院办公厅正式通知整理，可下载系统导入表格。">
+  <title>中国节假日工作日历</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="中国节假日工作日历首页">
+      <span class="brand-mark" aria-hidden="true">历</span>
+      <span>中国节假日工作日历</span>
+    </a>
+    <a class="source-link" id="header-source" href="#" target="_blank" rel="noreferrer">
+      <i data-lucide="landmark" aria-hidden="true"></i>
+      中国政府网原文
+    </a>
+  </header>
+
+  <main>
+    <section class="release" aria-labelledby="release-title">
+      <div class="release-copy">
+        <div class="eyebrow"><span class="status-dot"></span> 最新正式版本</div>
+        <h1 id="release-title"><span id="latest-year">2026</span> 年<br>节假日工作日历</h1>
+        <p class="release-note">依据国务院办公厅正式通知逐日整理，格式与系统导入模板一致。</p>
+        <div class="actions">
+          <a class="button button-primary" id="xlsx-download" href="downloads/中国节假日工作日历-2026.xlsx" download>
+            <i data-lucide="download" aria-hidden="true"></i>
+            下载 Excel
+          </a>
+          <a class="button button-secondary" id="csv-download" href="downloads/中国节假日工作日历-2026.csv" download>
+            <i data-lucide="table-2" aria-hidden="true"></i>
+            CSV
+          </a>
+        </div>
+        <dl class="release-meta">
+          <div><dt>发布日期</dt><dd id="published-at">2025.11.04</dd></div>
+          <div><dt>导入记录</dt><dd><span id="row-count">39</span> 条</dd></div>
+          <div><dt>校验状态</dt><dd class="verified"><i data-lucide="badge-check"></i> 已复核</dd></div>
+        </dl>
+      </div>
+
+      <div class="calendar-visual" aria-label="2026 年节假日概览">
+        <div class="calendar-head">
+          <div>
+            <span>OFFICIAL CALENDAR</span>
+            <strong id="calendar-year">2026</strong>
+          </div>
+          <div class="calendar-legend">
+            <span><i class="legend-rest"></i>休息</span>
+            <span><i class="legend-work"></i>补班</span>
+          </div>
+        </div>
+        <div class="month-strip" id="month-strip"></div>
+        <div class="calendar-summary">
+          <div><span id="rest-count">33</span><small>休息日</small></div>
+          <div><span id="work-count">6</span><small>补班日</small></div>
+          <div><span>7</span><small>节假日</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="next-release" aria-labelledby="next-title">
+      <div>
+        <span class="section-kicker">NEXT RELEASE</span>
+        <h2 id="next-title">2027 年日历等待官方发布</h2>
+      </div>
+      <div class="monitor-status">
+        <i data-lucide="radar" aria-hidden="true"></i>
+        <div><strong>每日巡检</strong><span>发现通知后进入人工复核</span></div>
+      </div>
+    </section>
+
+    <section class="details" aria-labelledby="details-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">HOLIDAY DETAILS</span>
+          <h2 id="details-title">放假与补班安排</h2>
+        </div>
+        <p>日期完整收录，包括与周末自然衔接的休息日。</p>
+      </div>
+      <div class="holiday-list" id="holiday-list" aria-live="polite"></div>
+    </section>
+
+    <section class="provenance" aria-labelledby="provenance-title">
+      <div>
+        <span class="section-kicker">SOURCE & INTEGRITY</span>
+        <h2 id="provenance-title">每个版本都能追溯</h2>
+      </div>
+      <div class="provenance-grid">
+        <div class="provenance-item">
+          <i data-lucide="landmark" aria-hidden="true"></i>
+          <span>发布机关</span>
+          <strong>国务院办公厅</strong>
+        </div>
+        <div class="provenance-item">
+          <i data-lucide="file-badge" aria-hidden="true"></i>
+          <span>文件编号</span>
+          <strong id="document-number">国办发明电〔2025〕7号</strong>
+        </div>
+        <div class="provenance-item provenance-hash">
+          <i data-lucide="fingerprint" aria-hidden="true"></i>
+          <span>Excel SHA-256</span>
+          <strong id="file-hash">读取中</strong>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>仅收录国务院办公厅正式发布的全国性节假日安排</span>
+    <a id="footer-source" href="#" target="_blank" rel="noreferrer">核对官方原文 <i data-lucide="arrow-up-right"></i></a>
+  </footer>
+</body>
+</html>
